@@ -1,3 +1,16 @@
+export const deleteChat = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	// Dummy delete logic for demonstration
+	if (id !== 'chat_1001' && id !== 'chat_1002') {
+		res.status(404).json({
+			success: false,
+			data: null,
+			error: 'Chat not found'
+		});
+		return;
+	}
+	res.status(204).send();
+};
 export const updateChat = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	const { topic } = req.body;
