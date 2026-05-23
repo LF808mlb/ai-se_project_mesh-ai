@@ -1,3 +1,21 @@
+export const ingestDocument = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	// Dummy ingestion logic for demonstration
+	if (id !== 'doc_1001' && id !== 'doc_1002') {
+		res.status(404).json({
+			success: false,
+			data: null,
+			error: 'Document not found'
+		});
+		return;
+	}
+	// Simulate async ingestion start
+	res.status(202).json({
+		success: true,
+		data: { message: 'Ingestion started', documentId: id },
+		error: null
+	});
+};
 export const deleteDocument = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	// Dummy delete logic for demonstration
