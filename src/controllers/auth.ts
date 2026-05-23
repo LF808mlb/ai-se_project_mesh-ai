@@ -1,3 +1,26 @@
+export const register = (req: Request, res: Response): void => {
+  const { email, password, name } = req.body;
+  // Dummy registration logic for demonstration
+  if (!email || !password || !name) {
+    res.status(400).json({
+      success: false,
+      data: null,
+      error: 'Missing required fields'
+    });
+    return;
+  }
+  // Simulate user creation
+  res.status(201).json({
+    success: true,
+    data: {
+      userId: 'user_' + Math.floor(Math.random() * 10000),
+      email,
+      name,
+      createdAt: new Date().toISOString()
+    },
+    error: null
+  });
+};
 export const login = (req: Request, res: Response): void => {
   const { email, password } = req.body;
   // Dummy authentication logic for demonstration
