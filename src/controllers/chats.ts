@@ -1,3 +1,35 @@
+export const sendMessage = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	const { message } = req.body;
+	// Dummy chat existence check
+	if (id !== 'chat_1001' && id !== 'chat_1002') {
+		res.status(404).json({
+			success: false,
+			data: null,
+			error: 'Chat not found'
+		});
+		return;
+	}
+	if (!message) {
+		res.status(400).json({
+			success: false,
+			data: null,
+			error: 'Missing message field'
+		});
+		return;
+	}
+	// Dummy reply logic
+	res.status(201).json({
+		success: true,
+		data: {
+			chatId: id,
+			message,
+			reply: `Echo: ${message}`,
+			sentAt: new Date().toISOString()
+		},
+		error: null
+	});
+};
 export const deleteChat = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	// Dummy delete logic for demonstration
