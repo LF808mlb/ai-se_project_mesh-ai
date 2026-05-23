@@ -1,3 +1,33 @@
+export const updateChat = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	const { topic } = req.body;
+	// Dummy update logic for demonstration
+	if (id !== 'chat_1001' && id !== 'chat_1002') {
+		res.status(404).json({
+			success: false,
+			data: null,
+			error: 'Chat not found'
+		});
+		return;
+	}
+	if (!topic) {
+		res.status(400).json({
+			success: false,
+			data: null,
+			error: 'Missing topic field'
+		});
+		return;
+	}
+	res.status(200).json({
+		success: true,
+		data: {
+			chatId: id,
+			topic,
+			updatedAt: new Date().toISOString()
+		},
+		error: null
+	});
+};
 export const getChatById = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	// Dummy data for demonstration
