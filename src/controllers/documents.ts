@@ -1,3 +1,33 @@
+export const updateDocument = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	const { name } = req.body;
+	// Dummy update logic for demonstration
+	if (id !== 'doc_1001' && id !== 'doc_1002') {
+		res.status(404).json({
+			success: false,
+			data: null,
+			error: 'Document not found'
+		});
+		return;
+	}
+	if (!name) {
+		res.status(400).json({
+			success: false,
+			data: null,
+			error: 'Missing name field'
+		});
+		return;
+	}
+	res.status(200).json({
+		success: true,
+		data: {
+			documentId: id,
+			name,
+			updatedAt: new Date().toISOString()
+		},
+		error: null
+	});
+};
 export const getDocumentById = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	// Dummy data for demonstration
