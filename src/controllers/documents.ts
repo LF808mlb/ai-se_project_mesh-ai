@@ -16,23 +16,20 @@ export const ingestDocument = (req: Request, res: Response): void => {
 		error: null
 	});
 };
-export const deleteDocument = (req: Request, res: Response): void => {
-	const { id } = req.params;
-	// Dummy delete logic for demonstration
-	if (id !== 'doc_1001' && id !== 'doc_1002') {
-		res.status(404).json({
-			success: false,
-			data: null,
-			error: 'Document not found'
-		});
-		return;
-	}
-	res.status(200).json({
-		success: true,
-		data: {},
-		error: null
-	});
-};
+
+	export const deleteDocument = (req: Request, res: Response): void => {
+		const { id } = req.params;
+		// Dummy delete logic for demonstration
+		if (id !== 'doc_1001' && id !== 'doc_1002') {
+			res.status(404).json({
+				success: false,
+				data: null,
+				error: 'Document not found'
+			});
+			return;
+		}
+		res.status(204).send();
+	};
 export const updateDocument = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	const { name } = req.body;
