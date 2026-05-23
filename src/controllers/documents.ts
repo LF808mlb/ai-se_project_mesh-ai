@@ -1,3 +1,36 @@
+export const getDocumentById = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	// Dummy data for demonstration
+	if (id === 'doc_1001') {
+		res.status(200).json({
+			success: true,
+			data: {
+				documentId: 'doc_1001',
+				userId: 'user_001',
+				name: 'example.txt',
+				uploadedAt: '2026-05-23T00:00:00Z'
+			},
+			error: null
+		});
+	} else if (id === 'doc_1002') {
+		res.status(200).json({
+			success: true,
+			data: {
+				documentId: 'doc_1002',
+				userId: 'user_001',
+				name: 'notes.pdf',
+				uploadedAt: '2026-05-22T00:00:00Z'
+			},
+			error: null
+		});
+	} else {
+		res.status(404).json({
+			success: false,
+			data: null,
+			error: 'Document not found'
+		});
+	}
+};
 export const listDocuments = (req: Request, res: Response): void => {
 	// Dummy data for demonstration
 	const userId = req.query.userId || 'user_001';
