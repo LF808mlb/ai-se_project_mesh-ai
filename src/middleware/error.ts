@@ -1,4 +1,4 @@
-export const notFoundHandler = (req: Request, res: Response, _next: NextFunction) => {
+export const notFoundHandler = (req: Request, res: Response, _next: NextFunction): void => {
   res.status(404).json({
     success: false,
     data: null,
@@ -7,7 +7,7 @@ export const notFoundHandler = (req: Request, res: Response, _next: NextFunction
 };
 import type { Request, Response, NextFunction } from 'express';
 
-export const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction) => {
+export const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction): void => {
   
   console.error(err);
 
