@@ -73,83 +73,85 @@ export const updateChat = (req: Request, res: Response): void => {
 		error: null
 	});
 };
-export const getChatById = (req: Request, res: Response): void => {
-	const { id } = req.params;
-	// Dummy data for demonstration
-	if (id === 'chat_1001') {
+export const getChatById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+	const userId = req.user!.userId;
+
+	try {
+		const chat = await Chat.findOne()
+			.where('_id')
+			.equals(req.params.id)
+			.where('userId')
+			.equals(userId);
+
+		if (!chat) {
+			res.status(404).json({
+				success: false,
+				data: null,
+				error: { message: 'Chat not found' }
+			});
+			return;
+		}
+
+		const messages = await Message.find()
+			.where('chatId')
+			.equals(chat._id)
+			.sort({ createdAt: 1 });
+
 		res.status(200).json({
 			success: true,
-			data: {
-				chatId: 'chat_1001',
-				userId: 'user_001',
-				topic: 'AI discussion',
-				createdAt: '2026-05-23T00:00:00Z'
-			},
+			data: { chat, messages },
 			error: null
 		});
-	} else if (id === 'chat_1002') {
-		res.status(200).json({
-			success: true,
-			data: {
-				chatId: 'chat_1002',
-				userId: 'user_001',
-				topic: 'Project planning',
-				createdAt: '2026-05-22T00:00:00Z'
-			},
-			error: null
-		});
-	} else {
-		res.status(404).json({
-			success: false,
-			data: null,
-			error: 'Chat not found'
-		});
+	} catch (err) {
+		next(err);
 	}
 };
-export const getChats = (req: Request, res: Response): void => {
-	// Dummy data for demonstration
-	const userId = req.query.userId || 'user_001';
-	const chats = [
-		{
-			chatId: 'chat_1001',
-			userId,
-			topic: 'AI discussion',
-			createdAt: '2026-05-23T00:00:00Z'
-		},
-		{
-			chatId: 'chat_1002',
-			userId,
-			topic: 'Project planning',
-			createdAt: '2026-05-22T00:00:00Z'
-		}
-	];
-	res.status(200).json({
-		success: true,
-		data: chats,
-		error: null
-	});
-};
-import type { Request, Response } from 'express';
+export const getChats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+	try {
+		const chats = await Chat.find().where('userId').equals(req.user!.userId);
 
-export const createChat = (req: Request, res: Response): void => {
-	const { userId, topic } = req.body;
-	if (!userId || !topic) {
+		res.status(200).json({
+			success: true,
+			data: chats,
+			error: null
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+import type { NextFunction, Request, Response } from 'express';
+import Chat from '../models/chat.js';
+import Message from '../models/message.js';
+
+export const createChat = async (req: Request, res: Response, next: NextFunction) => {
+	const { title } = req.body;
+
+	if (!title) {
 		res.status(400).json({
 			success: false,
 			data: null,
-			error: 'Missing required fields'
+			error: { message: 'title is required' }
 		});
 		return;
 	}
-	// Simulate chat session creation
-	res.status(201).json({
-		success: true,
-		data: {
-			chatId: 'chat_' + Math.floor(Math.random() * 10000),
-			userId,
-			topic,
-			createdAt: new Date().toISOString()
-		},
-		error: null
-	});
+
+	try {
+		const chat = await Chat.create({
+			title,
+			userId: req.user!.userId
+		});
+
+		res.status(201).json({
+			success: true,
+			data: {
+				chatId: chat._id,
+				title: chat.title,
+				userId: chat.userId,
+				createdAt: chat.createdAt
+			},
+			error: null
+		});
+	} catch (err) {
+		next(err);
+	}
 };
