@@ -58,7 +58,7 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
   }
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne().where('email').equals(email);
     if (!user) {
       res.status(401).json({
         success: false,

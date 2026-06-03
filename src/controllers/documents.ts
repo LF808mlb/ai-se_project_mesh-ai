@@ -1,3 +1,6 @@
+import type { NextFunction, Request, Response } from 'express';
+import Document from '../models/document.js';
+
 export const ingestDocument = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	// Dummy ingestion logic for demonstration
@@ -17,19 +20,20 @@ export const ingestDocument = (req: Request, res: Response): void => {
 	});
 };
 
-	export const deleteDocument = (req: Request, res: Response): void => {
-		const { id } = req.params;
-		// Dummy delete logic for demonstration
-		if (id !== 'doc_1001' && id !== 'doc_1002') {
-			res.status(404).json({
-				success: false,
-				data: null,
-				error: 'Document not found'
-			});
-			return;
-		}
-		res.status(204).send();
-	};
+export const deleteDocument = (req: Request, res: Response): void => {
+	const { id } = req.params;
+	// Dummy delete logic for demonstration
+	if (id !== 'doc_1001' && id !== 'doc_1002') {
+		res.status(404).json({
+			success: false,
+			data: null,
+			error: 'Document not found'
+		});
+		return;
+	}
+	res.status(204).send();
+};
+
 export const updateDocument = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	const { name } = req.body;
@@ -60,6 +64,36 @@ export const updateDocument = (req: Request, res: Response): void => {
 		error: null
 	});
 };
+
+export const uploadDocument = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+	if (!req.file) {
+		res.status(400).send({
+			success: false,
+			data: null,
+			error: { message: 'File is required' },
+		});
+		return;
+	}
+
+	const title = req.body.title || req.file.originalname;
+
+	try {
+		const document = await Document.create({
+			title,
+			fileName: req.file.originalname,
+			userId: req.user!.userId,
+		});
+
+		res.status(201).send({
+			success: true,
+			data: document,
+			error: null,
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
 export const getDocumentById = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	// Dummy data for demonstration
@@ -93,49 +127,17 @@ export const getDocumentById = (req: Request, res: Response): void => {
 		});
 	}
 };
-export const listDocuments = (req: Request, res: Response): void => {
-	// Dummy data for demonstration
-	const userId = req.query.userId || 'user_001';
-	const documents = [
-		{
-			documentId: 'doc_1001',
-			userId,
-			name: 'example.txt',
-			uploadedAt: '2026-05-23T00:00:00Z'
-		},
-		{
-			documentId: 'doc_1002',
-			userId,
-			name: 'notes.pdf',
-			uploadedAt: '2026-05-22T00:00:00Z'
-		}
-	];
-	res.status(200).json({
-		success: true,
-		data: documents,
-		error: null
-	});
-};
-import type { Request, Response } from 'express';
 
-export const uploadDocument = (req: Request, res: Response): void => {
-	const { name, content } = req.body;
-	if (!name || !content) {
-		res.status(400).json({
-			success: false,
-			data: null,
-			error: 'Missing required fields'
+export const listDocuments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+	try {
+		const documents = await Document.find().where('userId').equals(req.user!.userId);
+
+		res.status(200).json({
+			success: true,
+			data: documents,
+			error: null
 		});
-		return;
+	} catch (err) {
+		next(err);
 	}
-	// Simulate document upload
-	res.status(201).json({
-		success: true,
-		data: {
-			documentId: 'doc_' + Math.floor(Math.random() * 10000),
-			name,
-			uploadedAt: new Date().toISOString()
-		},
-		error: null
-	});
 };
