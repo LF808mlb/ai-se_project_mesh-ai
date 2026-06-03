@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { createChat, getChats, getChatById, updateChat, deleteChat, sendMessage } from '../controllers/chats.js';
+import { createChat, getChats, getChat, updateChat, deleteChat } from '../controllers/chats.js';
+import { createMessage } from '../controllers/messages.js';
 import { auth } from '../middleware/auth.js';
 
 const chatsRouter = Router();
@@ -10,11 +11,11 @@ chatsRouter.post('/', createChat);
 
 chatsRouter.get('/', getChats);
 
-chatsRouter.get('/:id', getChatById);
+chatsRouter.get('/:id', getChat);
 
 chatsRouter.patch('/:id', updateChat);
 
 chatsRouter.delete('/:id', deleteChat);
-chatsRouter.post('/:id/messages', sendMessage);
+chatsRouter.post('/:id/messages', createMessage);
 
 export { chatsRouter };

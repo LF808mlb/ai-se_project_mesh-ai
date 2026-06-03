@@ -106,6 +106,9 @@ export const getChatById = async (req: Request, res: Response, next: NextFunctio
 		next(err);
 	}
 };
+
+export const getChat = getChatById;
+
 export const getChats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
 		const chats = await Chat.find().where('userId').equals(req.user!.userId);
