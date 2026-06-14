@@ -54,7 +54,7 @@ export default function KnowledgeBase() {
         <ul>
           {documents.map((doc) => (
             <li key={doc._id}>
-              <span>{doc.fileName}</span>
+              <span className="document">{doc.fileName}</span>
               <button type="button" aria-label={`Delete ${doc.fileName}`}>
                 <img src={deleteIcon} alt="" aria-hidden="true" />
               </button>
