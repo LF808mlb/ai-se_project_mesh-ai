@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./KnowledgeBase.css";
 import type { KnowledgeDoc } from "../../utils/api";
-import {UploadArea} from "../../components/UploadArea/UploadArea";
+import UploadArea from "../../components/UploadArea/UploadArea";
 
 export default function KnowledgeBase() {
 
@@ -9,14 +9,25 @@ export default function KnowledgeBase() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const handleFileSelect = (file: File) => {
+    const newDoc: KnowledgeDoc = {
+      _id: Date.now().toString(),
+      title: file.name,
+      fileName: file.name,
+      userId: 'local',
+      createdAt: new Date().toISOString(),
+    };
+    setDocuments([newDoc, ...documents]);
+  };
+
   return (
     <div className="knowledge-base">
       <h1>Manage Your Knowledge Base</h1>
       <section className="knowledge-base__content">
         <p>Upload documents (PDF)</p>
-        <UploadArea />
+        <UploadArea onFileSelect={handleFileSelect} />
         {/* document list goes here later */}
-        <button>Save</button>
+        <button className="knowledge-base__save-btn">Save</button>
       </section>
     </div>
   );
