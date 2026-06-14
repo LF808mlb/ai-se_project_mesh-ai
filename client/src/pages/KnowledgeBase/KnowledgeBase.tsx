@@ -1,13 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./KnowledgeBase.css";
 import type { KnowledgeDoc } from "../../utils/api";
 import UploadArea from "../../components/UploadArea/UploadArea";
+import { getDocuments } from "../../utils/api";
+import deleteIcon from "../../assets/Frame.png";
 
 export default function KnowledgeBase() {
 
   const [documents, setDocuments] = useState<KnowledgeDoc[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      setIsLoading(true);
+      try {
+        const res = await getDocuments();
+
+        if (!res.success) {
+          throw new Error();
+        }
+
+        setDocuments(res.data ?? []);
+      } catch {
+        setError("Failed to load documents.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    load();
+  }, []);
 
   const handleFileSelect = (file: File) => {
     const newDoc: KnowledgeDoc = {
@@ -25,8 +48,19 @@ export default function KnowledgeBase() {
       <h1>Manage Your Knowledge Base</h1>
       <section className="knowledge-base__content">
         <p>Upload documents (PDF)</p>
+        {isLoading && <p>Loading documents...</p>}
+        {error && <p>{error}</p>}
         <UploadArea onFileSelect={handleFileSelect} />
-        {/* document list goes here later */}
+        <ul>
+          {documents.map((doc) => (
+            <li key={doc._id}>
+              <span>{doc.fileName}</span>
+              <button type="button" aria-label={`Delete ${doc.fileName}`}>
+                <img src={deleteIcon} alt="" aria-hidden="true" />
+              </button>
+            </li>
+          ))}
+        </ul>
         <button className="knowledge-base__save-btn">Save</button>
       </section>
     </div>
