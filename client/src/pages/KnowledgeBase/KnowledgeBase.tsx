@@ -49,7 +49,7 @@ export default function KnowledgeBase() {
     <div className="knowledge-base">
       <h1>Manage Your Knowledge Base</h1>
       <section className="knowledge-base__content">
-        <p>Upload documents (PDF)</p>
+        <p className="knowledge-base__upload-text">Upload documents (PDF)</p>
         <UploadArea onFileSelect={handleFileSelect} />
         {!isLoading && !error && documents.length > 0 && (
           <ul className="file__upload-list">
