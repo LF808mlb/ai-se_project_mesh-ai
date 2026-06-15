@@ -51,7 +51,7 @@ export default function KnowledgeBase() {
         {isLoading && <p>Loading documents...</p>}
         {error && <p>{error}</p>}
         <UploadArea onFileSelect={handleFileSelect} />
-        <ul>
+        <ul className="file__upload-list">
           {documents.map((doc) => (
             <li key={doc._id} className="file__upload">
               <span className="document">{doc.fileName}</span>
