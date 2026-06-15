@@ -49,12 +49,7 @@ export default function KnowledgeBase() {
       <h1>Manage Your Knowledge Base</h1>
       <section className="knowledge-base__content">
         <p>Upload documents (PDF)</p>
-        {isLoading && <p>Loading documents...</p>}
-        {!isLoading && error && <p>{error}</p>}
         <UploadArea onFileSelect={handleFileSelect} />
-        {!isLoading && !error && documents.length === 0 && (
-          <p>No documents yet. Upload a PDF to get started.</p>
-        )}
         {!isLoading && !error && documents.length > 0 && (
           <ul className="file__upload-list">
             {documents.map((doc) => (
@@ -66,6 +61,11 @@ export default function KnowledgeBase() {
               </li>
             ))}
           </ul>
+        )}
+        {isLoading && <p>Loading documents...</p>}
+        {!isLoading && error && <p>{error}</p>}
+        {!isLoading && !error && documents.length === 0 && (
+          <p>No documents yet. Upload a PDF to get started.</p>
         )}
         <button className="knowledge-base__save-btn">Save</button>
       </section>
