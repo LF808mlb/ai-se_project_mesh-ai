@@ -14,6 +14,7 @@ export default function KnowledgeBase() {
   useEffect(() => {
     const load = async () => {
       setIsLoading(true);
+      setError(null);
       try {
         const res = await getDocuments();
 
@@ -49,18 +50,23 @@ export default function KnowledgeBase() {
       <section className="knowledge-base__content">
         <p>Upload documents (PDF)</p>
         {isLoading && <p>Loading documents...</p>}
-        {error && <p>{error}</p>}
+        {!isLoading && error && <p>{error}</p>}
         <UploadArea onFileSelect={handleFileSelect} />
-        <ul className="file__upload-list">
-          {documents.map((doc) => (
-            <li key={doc._id} className="file__upload">
-              <span className="document">{doc.fileName}</span>
-              <button type="button" className="delete-btn" aria-label={`Delete ${doc.fileName}`}>
-                <img src={deleteIcon} alt="" aria-hidden="true" className="delete-icon" />
-              </button>
-            </li>
-          ))}
-        </ul>
+        {!isLoading && !error && documents.length === 0 && (
+          <p>No documents yet. Upload a PDF to get started.</p>
+        )}
+        {!isLoading && !error && documents.length > 0 && (
+          <ul className="file__upload-list">
+            {documents.map((doc) => (
+              <li key={doc._id} className="file__upload">
+                <span className="document">{doc.fileName}</span>
+                <button type="button" className="delete-btn" aria-label={`Delete ${doc.fileName}`}>
+                  <img src={deleteIcon} alt="" aria-hidden="true" className="delete-icon" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
         <button className="knowledge-base__save-btn">Save</button>
       </section>
     </div>
