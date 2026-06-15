@@ -62,10 +62,10 @@ export default function KnowledgeBase() {
             ))}
           </ul>
         )}
-        {isLoading && <p>Loading documents...</p>}
-        {!isLoading && error && <p>{error}</p>}
+        {isLoading && <p className="state-message">Loading documents...</p>}
+        {!isLoading && error && <p className="state-message state-message--error">{error}</p>}
         {!isLoading && !error && documents.length === 0 && (
-          <p>No documents yet.</p>
+          <p className="state-message">No documents yet.</p>
         )}
         <button className="knowledge-base__save-btn">Save</button>
       </section>

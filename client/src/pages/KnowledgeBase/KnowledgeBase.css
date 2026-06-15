@@ -18,6 +18,14 @@
   padding: 0;
 }
 
+.state-message {
+  margin: 12px 0 0;
+}
+
+.state-message--error {
+  color: #d32f2f;
+}
+
 .file__upload {
   display: inline-flex;
   align-items: center;
