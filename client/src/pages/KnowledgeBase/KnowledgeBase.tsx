@@ -53,10 +53,10 @@ export default function KnowledgeBase() {
         <UploadArea onFileSelect={handleFileSelect} />
         <ul>
           {documents.map((doc) => (
-            <li key={doc._id}>
+            <li key={doc._id} className="file__upload">
               <span className="document">{doc.fileName}</span>
-              <button type="button" aria-label={`Delete ${doc.fileName}`}>
-                <img src={deleteIcon} alt="" aria-hidden="true" />
+              <button type="button" className="delete-btn" aria-label={`Delete ${doc.fileName}`}>
+                <img src={deleteIcon} alt="" aria-hidden="true" className="delete-icon" />
               </button>
             </li>
           ))}
