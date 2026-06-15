@@ -74,3 +74,23 @@
 .delete-btn:hover .delete-icon--hover {
   display: block;
 }
+
+@media (max-width: 767px) {
+  .file__upload-list {
+    margin-top: 12px;
+  }
+
+  .file__upload {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .document {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .knowledge-base__save-btn {
+    width: 100%;
+  }
+}
