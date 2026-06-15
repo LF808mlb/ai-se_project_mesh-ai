@@ -4,6 +4,7 @@ import type { KnowledgeDoc } from "../../utils/api";
 import UploadArea from "../../components/UploadArea/UploadArea";
 import { getDocuments } from "../../utils/api";
 import deleteIcon from "../../assets/Frame.png";
+import deleteIconHover from "../../assets/grayframe.png";
 
 export default function KnowledgeBase() {
 
@@ -56,7 +57,8 @@ export default function KnowledgeBase() {
               <li key={doc._id} className="file__upload">
                 <span className="document">{doc.fileName}</span>
                 <button type="button" className="delete-btn" aria-label={`Delete ${doc.fileName}`}>
-                  <img src={deleteIcon} alt="" aria-hidden="true" className="delete-icon" />
+                  <img src={deleteIcon} alt="" aria-hidden="true" className="delete-icon delete-icon--default" />
+                  <img src={deleteIconHover} alt="" aria-hidden="true" className="delete-icon delete-icon--hover" />
                 </button>
               </li>
             ))}
