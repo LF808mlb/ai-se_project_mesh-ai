@@ -65,7 +65,7 @@ export default function KnowledgeBase() {
         {isLoading && <p>Loading documents...</p>}
         {!isLoading && error && <p>{error}</p>}
         {!isLoading && !error && documents.length === 0 && (
-          <p>No documents yet. Upload a PDF to get started.</p>
+          <p>No documents yet.</p>
         )}
         <button className="knowledge-base__save-btn">Save</button>
       </section>
