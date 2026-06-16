@@ -18,20 +18,19 @@ export default function Intro() {
       <div className="intro__cards" aria-label="Feature highlights">
         <article className="intro__card">
           <img className="intro__icon" src={introIcon1} alt="Upload documents" />
-          <h2 className="intro__card-title">Upload Docs</h2>
           <p className="intro__card-text">Bring all your documents into one secure AI workspace</p>
         </article>
 
         <article className="intro__card">
           <img className="intro__icon" src={introIcon2} alt="Search your content" />
-          <h2 className="intro__card-title">Smart Retrieval</h2>
-          <p className="intro__card-text">Let MeshAI clean, organize, and prepare your knowledge for fast retrieval</p>
+          <p className="intro__card-text">Organize and manage the documents that power your AI
+</p>
         </article>
 
         <article className="intro__card">
           <img className="intro__icon" src={introIcon3} alt="Chat with your knowledge" />
-          <h2 className="intro__card-title">Ask Anything</h2>
-          <p className="intro__card-text">Use that AI model that fits each task -- safely, privately, and with full compliance</p>
+          <p className="intro__card-text">Your knowledge base, accessible through a simple chat interface
+</p>
         </article>
       </div>
 
