@@ -127,6 +127,7 @@
   }
 
   .intro__cards {
+    flex: 1;
     display: flex;
     flex-direction: column;
     width: 362px;
@@ -135,17 +136,19 @@
     gap: 12px;
     padding: 10.5px 16px;
     box-sizing: border-box;
-    overflow: hidden;
+    margin-bottom: 24px;
   }
 
   .intro__footer {
-    width: 394px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
     max-width: calc(100vw - 32px);
     height: 166px;
     padding: 20px;
-    margin-top: 12px;
-    margin-bottom: 0;
-    box-sizing: border-box;
   }
 
   .intro__card {
@@ -173,5 +176,16 @@
     margin-bottom: 0;
     text-align: center;
     padding-bottom: 28px;
+    display: block;
+    width: 100%;
+    max-width: 354px;
+  }
+
+  .intro__start-btn {
+    width: 354px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
