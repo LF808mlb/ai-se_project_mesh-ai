@@ -3,8 +3,18 @@ import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
 export default function Header() {
-  function getNavLinkClass({ isActive }: { isActive: boolean }) {
-    return isActive ? "header__link header__link--active" : "header__link";
+  function getNavLinkClass({ isActive, isChat }: { isActive: boolean; isChat: boolean }) {
+    const classes = ["header__link"];
+
+    if (isActive) {
+      classes.push("header__link--active");
+    }
+
+    if (isActive && isChat) {
+      classes.push("header__link--chat-active");
+    }
+
+    return classes.join(" ");
   }
 
   return (
@@ -14,7 +24,7 @@ export default function Header() {
         <NavLink to="/knowledge" className={getNavLinkClass}>
           Knowledge Base
         </NavLink>
-        <NavLink to="/chat" className={getNavLinkClass}>
+        <NavLink to="/chat" className={(props) => getNavLinkClass({ ...props, isChat: true })}>
           Chat
         </NavLink>
       </nav>

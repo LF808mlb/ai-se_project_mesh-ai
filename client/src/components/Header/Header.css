@@ -30,3 +30,15 @@
 .header__link--active {
   color: #1c1c1c;
 }
+
+.header__link--chat-active {
+  background: #9679d933;
+  border-radius: 4px;
+  width: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  height: 36px;
+}
