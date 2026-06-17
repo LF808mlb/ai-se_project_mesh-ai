@@ -36,10 +36,7 @@ export default function Chat() {
   }, []);
 
   const handleCreateChat = async () => {
-    const title = newChatTitle.trim();
-    if (!title) {
-      return;
-    }
+    const title = newChatTitle.trim() || `New Chat ${chats.length + 1}`;
 
     setIsCreatingChat(true);
     setChatsError(null);
@@ -62,47 +59,36 @@ export default function Chat() {
   };
 
   return (
-    <div>
-      <h2>Chats</h2>
-      {isLoadingChats && <p>Loading chats...</p>}
-      {!isLoadingChats && chatsError && <p>{chatsError}</p>}
-      {!isLoadingChats && !chatsError && (
-        <>
-          <div>
-            <input
-              type="text"
-              value={newChatTitle}
-              onChange={(event) => setNewChatTitle(event.target.value)}
-              placeholder="New chat title"
-            />
-            <button
-              type="button"
-              onClick={handleCreateChat}
-              disabled={isCreatingChat || !newChatTitle.trim()}
-            >
-              {isCreatingChat ? "Creating..." : "Create chat"}
-            </button>
-          </div>
+    <div className="chat">
+      <aside className="chat__sidebar">
+        <button
+          className="chat__new-btn"
+          type="button"
+          onClick={handleCreateChat}
+          disabled={isCreatingChat}
+        >
+          {isCreatingChat ? "Creating..." : "+ New Chat"}
+        </button>
 
-          {chats.length === 0 ? (
-            <p>No chats yet.</p>
-          ) : (
-            <ul>
-              {chats.map((chat) => (
-                <li key={chat._id}>
-                  <button
-                    type="button"
-                    onClick={() => setActiveChatId(chat._id)}
-                    aria-current={activeChatId === chat._id}
-                  >
-                    {chat.title}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
+        {isLoadingChats && <p className="chat__sidebar-message">Loading...</p>}
+        {chatsError && <p className="chat__sidebar-message">{chatsError}</p>}
+
+        <ul className="chat__list">
+          {chats.map((c) => (
+            <li key={c._id}>
+              <button
+                type="button"
+                className={`chat__item ${c._id === activeChatId ? "chat__item_active" : ""}`.trim()}
+                onClick={() => setActiveChatId(c._id)}
+              >
+                {c.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      <div className="chat__main">{/* message area - coming next lesson */}</div>
     </div>
   );
 }
