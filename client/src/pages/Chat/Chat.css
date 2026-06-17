@@ -1,11 +1,10 @@
 .chat {
-  position: relative;
   min-height: 100vh;
 }
 
 .chat__sidebar {
   position: absolute;
-  top: calc(72px + 22px);
+  top: 22px;
   left: 20px;
   width: 220px;
   height: 156px;
