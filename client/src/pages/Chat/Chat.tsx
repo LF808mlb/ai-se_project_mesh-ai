@@ -36,25 +36,19 @@ export default function Chat() {
   }, []);
 
   const handleCreateChat = async () => {
-    const title = newChatTitle.trim() || `New Chat ${chats.length + 1}`;
-
-    setIsCreatingChat(true);
-    setChatsError(null);
+    const title = newChatTitle.trim() || "New Chat";
+    setIsCreatingChat(false);
+    setNewChatTitle("");
 
     try {
       const res = await createChat(title);
 
-      if (!res.success || !res.data) {
-        throw new Error();
+      if (res.data) {
+        setChats((prev) => [res.data as ChatType, ...prev]);
+        setActiveChatId(res.data._id);
       }
-
-      setChats((prev) => [res.data as ChatType, ...prev]);
-      setActiveChatId(res.data._id);
-      setNewChatTitle("");
     } catch {
-      setChatsError("Failed to create chat.");
-    } finally {
-      setIsCreatingChat(false);
+      // A toast or inline error could go here in the future.
     }
   };
 
@@ -64,11 +58,31 @@ export default function Chat() {
         <button
           className="chat__new-btn"
           type="button"
-          onClick={handleCreateChat}
+          onClick={() => setIsCreatingChat(true)}
           disabled={isCreatingChat}
         >
-          {isCreatingChat ? "Creating..." : "+ New Chat"}
+          + New Chat
         </button>
+
+        {isCreatingChat && (
+          <input
+            className="chat__title-input"
+            type="text"
+            placeholder="Chat name"
+            value={newChatTitle}
+            onChange={(e) => setNewChatTitle(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                void handleCreateChat();
+              }
+              if (e.key === "Escape") {
+                setIsCreatingChat(false);
+                setNewChatTitle("");
+              }
+            }}
+            autoFocus
+          />
+        )}
 
         {isLoadingChats && <p className="chat__sidebar-message">Loading...</p>}
         {chatsError && <p className="chat__sidebar-message">{chatsError}</p>}

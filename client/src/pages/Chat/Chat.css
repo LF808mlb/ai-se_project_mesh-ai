@@ -42,6 +42,8 @@
 
 .chat__item {
   height: 100%;
+  padding-left: 12px;
+  box-sizing: border-box;
 }
 
 .chat__sidebar-message {
@@ -51,4 +53,6 @@
 .chat__item_active {
   background: #9679d933;
   border-radius: 4px;
+  color: #9679d9;
+  font-size: 14px;
 }
