@@ -34,17 +34,19 @@ export default function Intro() {
         </article>
       </div>
 
-      <p className="intro__subtitle">
-        Start by creating your Organization's Knowledge Base.
-      </p>
+      <footer className="intro__footer">
+        <p className="intro__subtitle">
+          Start by creating your Organization's Knowledge Base.
+        </p>
 
-      <button
-        type="button"
-        className="intro__start-btn"
-        onClick={() => navigate("/knowledge")}
-      >
-        Start
-      </button>
+        <button
+          type="button"
+          className="intro__start-btn"
+          onClick={() => navigate("/knowledge")}
+        >
+          Start
+        </button>
+      </footer>
     </section>
   );
 }
