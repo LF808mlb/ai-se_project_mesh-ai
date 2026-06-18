@@ -68,6 +68,27 @@
   color: #6b6b6b;
 }
 
+.chat__no-messages_initial {
+  width: 670px;
+  min-height: 76px;
+  margin: 260px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  max-width: 100%;
+}
+
+.chat__no-messages-title {
+  width: 670px;
+  min-height: 76px;
+  margin: 0;
+  font-weight: 600;
+  font-size: 32px;
+  text-align: center;
+  max-width: 100%;
+}
+
 .chat__messages {
   display: flex;
   flex-direction: column;
