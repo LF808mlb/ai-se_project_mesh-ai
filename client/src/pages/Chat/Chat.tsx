@@ -7,6 +7,7 @@ import {
   type Chat as ChatType,
   type Message,
 } from "../../utils/api";
+import chatArrow from "../../assets/chat-arrow.png";
 import "./Chat.css";
 
 export default function Chat() {
@@ -149,8 +150,14 @@ export default function Chat() {
         )}
 
         {!messagesError && !isLoadingMessages && activeChatId && messages.length === 0 && (
-          <div className="chat__no-messages">
-            <p>No messages in this chat yet.</p>
+          <div className="chat__no-messages chat__no-messages_initial">
+            <p className="chat__no-messages-title">
+              Ask a question below to start the conversation
+            </p>
+            <div className="chat__ask-box">
+              <span>Ask any question</span>
+              <img className="chat__ask-arrow" src={chatArrow} alt="Send" />
+            </div>
           </div>
         )}
 
