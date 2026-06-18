@@ -56,3 +56,84 @@
   color: #9679d9;
   font-size: 14px;
 }
+
+.chat__main {
+  min-height: 100vh;
+  margin-left: 280px;
+  padding: 24px;
+}
+
+.chat__no-messages,
+.chat__error {
+  color: #6b6b6b;
+}
+
+.chat__messages {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-y: auto;
+}
+
+.chat__message {
+  max-width: min(720px, 90%);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.chat__message_user {
+  align-self: flex-end;
+  background: #f1ecff;
+  border-radius: 16px;
+  padding: 10px 14px;
+}
+
+.chat__message_assistant {
+  align-self: flex-start;
+}
+
+.chat__message_assistant p {
+  margin-bottom: 12px;
+}
+
+.chat__message_assistant p:last-child {
+  margin-bottom: 0;
+}
+
+.chat__message_assistant strong {
+  font-weight: 600;
+}
+
+.chat__message_assistant ul,
+.chat__message_assistant ol {
+  padding-left: 20px;
+  margin-bottom: 12px;
+}
+
+.chat__message_assistant li {
+  margin-bottom: 4px;
+}
+
+.chat__message_assistant h1,
+.chat__message_assistant h2,
+.chat__message_assistant h3 {
+  font-weight: 600;
+  margin: 16px 0 8px;
+}
+
+.chat__message_assistant hr {
+  border: none;
+  border-bottom: 1px solid rgb(28 28 28 / 0.1);
+  margin: 16px 0;
+}
+
+.chat__message_assistant code {
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', monospace;
+  font-size: 0.9em;
+  background: rgb(0 0 0 / 0.06);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
