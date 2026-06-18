@@ -125,7 +125,7 @@
 
 .chat__message_user {
   align-self: flex-end;
-  background: #f1ecff;
+  background: #1c1c1c0d;
   border-radius: 16px;
   padding: 10px 14px;
 }
