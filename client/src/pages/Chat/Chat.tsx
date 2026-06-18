@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { useNavigate } from "react-router-dom";
 import {
   createChat,
   getChat,
@@ -8,9 +9,11 @@ import {
   type Message,
 } from "../../utils/api";
 import chatArrow from "../../assets/chat-arrow.png";
+import errorImage from "../../assets/errorimage.png";
 import "./Chat.css";
 
 export default function Chat() {
+  const navigate = useNavigate();
   const [chats, setChats] = useState<ChatType[]>([]);
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
   const [chatsError, setChatsError] = useState<string | null>(null);
@@ -49,11 +52,15 @@ export default function Chat() {
     if (!activeChatId) return;
 
     const load = async () => {
+      const chatId = activeChatId;
+      if (!chatId) return;
+
       setMessages([]);
       setIsLoadingMessages(true);
       setMessagesError("");
       try {
-        const res = await getChat(activeChatId);
+        throw new Error("Test error");
+        const res = await getChat(chatId);
         setMessages(res.data?.messages || []);
       } catch {
         setMessagesError("Looks like something went wrong. Try reloading the page or creating the chat again.");
@@ -166,8 +173,17 @@ export default function Chat() {
         )}
 
         {activeChatId && messagesError && (
-          <div className="chat__error">
-            <p>{messagesError}</p>
+          <div className="chat__error chat__error_container">
+            <img className="chat__error-image" src={errorImage} alt="Error" />
+            <p className="chat__error-title">Looks like something went wrong</p>
+            <p className="chat__error-subtitle">Try reloading the page or creating the chat again</p>
+            <button
+              className="chat__new-btn chat__error-btn"
+              type="button"
+              onClick={() => navigate("/")}
+            >
+              Go to the Main Page
+            </button>
           </div>
         )}
 
