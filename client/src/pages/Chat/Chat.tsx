@@ -136,14 +136,14 @@ export default function Chat() {
         {!messagesError && !isLoadingMessages && !activeChatId && (
           <div className="chat__no-messages chat__no-messages_initial">
             <p className="chat__no-messages-title">
-              create a new chat or select an existing chat to start the conversation
+              Create a new chat or select an existing chat to start the conversation
             </p>
             <button
-              className="chat__new-btn"
+              className="chat__new-btn chat__new-btn_main"
               type="button"
               onClick={() => setIsCreatingChat(true)}
             >
-              + New Chat
+              Start New Chat
             </button>
           </div>
         )}
