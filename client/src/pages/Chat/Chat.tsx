@@ -5,6 +5,7 @@ import {
   createChat,
   getChat,
   getChats,
+  sendMessage,
   type Chat as ChatType,
   type Message,
 } from "../../utils/api";
@@ -88,6 +89,44 @@ export default function Chat() {
       }
     } catch {
       // A toast or inline error could go here in the future.
+    }
+  };
+
+  const handleSend = async () => {
+    const text = input.trim();
+    if (!text || !activeChatId || isSending) return;
+
+    const userMessage: Message = {
+      _id: Date.now().toString(),
+      chatId: activeChatId,
+      role: "user",
+      content: text,
+      createdAt: new Date().toISOString(),
+    };
+
+    // 1. Append userMessage to the thread, clear the input, and set isSending to true
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsSending(true);
+
+    try {
+      const res = await sendMessage(activeChatId, text);
+      if (res.data) {
+        setMessages((prev) => [...prev, res.data!]);
+      }
+    } catch {
+      // 2. Append an error Message to the thread (role: 'assistant', content: 'Something went wrong. Please try again.')
+      const errorMessage: Message = {
+        _id: Date.now().toString(),
+        chatId: activeChatId,
+        role: "assistant",
+        content: "Something went wrong. Please try again.",
+        createdAt: new Date().toISOString(),
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      // 3. Set isSending to false
+      setIsSending(false);
     }
   };
 
@@ -217,18 +256,17 @@ export default function Chat() {
                 className="chat__input"
                 placeholder="Ask any question"
                 value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  if (isSending) {
-                    setIsSending(false);
-                  }
-                }}
+                onChange={(e) => setInput(e.target.value)}
                 rows={1}
               />
               <button
                 type="button"
                 className="chat__send"
                 aria-label="Send message"
+                onClick={() => {
+                  void handleSend();
+                }}
+                disabled={isSending || !input.trim()}
               >
                 <img className="chat__send-arrow" src={chatArrow} alt="Send" />
               </button>
