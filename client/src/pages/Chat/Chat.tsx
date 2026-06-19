@@ -189,24 +189,43 @@ export default function Chat() {
         )}
 
         {activeChatId && !isLoadingMessages && !messagesError && messages.length > 0 && (
-          <ul className="chat__messages">
-            {messages.map((msg) => (
-              <li
-                key={msg._id}
-                className={
-                  msg.role === "user"
-                    ? "chat__message chat__message_user"
-                    : "chat__message chat__message_assistant"
-                }
+          <>
+            {/* messages */}
+            <ul className="chat__messages">
+              {messages.map((msg) => (
+                <li
+                  key={msg._id}
+                  className={
+                    msg.role === "user"
+                      ? "chat__message chat__message_user"
+                      : "chat__message chat__message_assistant"
+                  }
+                >
+                  {msg.role === "assistant" ? (
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  ) : (
+                    msg.content
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            <div className="chat__input-bar">
+              <textarea
+                className="chat__input"
+                placeholder="Ask any question"
+
+                rows={1}
+              />
+              <button
+                type="button"
+                className="chat__send"
+                aria-label="Send message"
               >
-                {msg.role === "assistant" ? (
-                  <ReactMarkdown>{msg.content}</ReactMarkdown>
-                ) : (
-                  msg.content
-                )}
-              </li>
-            ))}
-          </ul>
+                <img className="chat__send-arrow" src={chatArrow} alt="Send" />
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
