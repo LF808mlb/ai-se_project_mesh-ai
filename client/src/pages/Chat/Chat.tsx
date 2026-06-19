@@ -59,7 +59,6 @@ export default function Chat() {
       setIsLoadingMessages(true);
       setMessagesError("");
       try {
-        throw new Error("Test error");
         const res = await getChat(chatId);
         setMessages(res.data?.messages || []);
       } catch {
@@ -169,7 +168,9 @@ export default function Chat() {
         )}
 
         {activeChatId && isLoadingMessages && (
-          <p className="chat__no-messages">Loading messages...</p>
+          <div className="chat__loading">
+            <p className="chat__loading-text">Loading...</p>
+          </div>
         )}
 
         {activeChatId && messagesError && (

@@ -116,6 +116,24 @@
   white-space: nowrap;
 }
 
+.chat__loading {
+  width: 670px;
+  height: 56px;
+  margin: 260px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.chat__loading-text {
+  margin: 0;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 48px;
+  text-align: center;
+}
+
 .chat__no-messages_initial {
   width: 670px;
   min-height: 76px;
