@@ -23,6 +23,8 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(false);
   const [messagesError, setMessagesError] = useState<string>("");
+  const [input, setInput] = useState<string>("");
+  const [isSending, setIsSending] = useState<boolean>(false);
 
   useEffect(() => {
     const load = async () => {
@@ -214,7 +216,13 @@ export default function Chat() {
               <textarea
                 className="chat__input"
                 placeholder="Ask any question"
-
+                value={input}
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  if (isSending) {
+                    setIsSending(false);
+                  }
+                }}
                 rows={1}
               />
               <button
