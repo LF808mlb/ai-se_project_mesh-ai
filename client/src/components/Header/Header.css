@@ -14,6 +14,10 @@
   opacity: 1;
 }
 
+.header__menu-btn {
+  display: none;
+}
+
 .header__nav {
   display: flex;
   align-items: center;
