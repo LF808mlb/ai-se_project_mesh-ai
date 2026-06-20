@@ -260,6 +260,7 @@
 }
 
 .chat__message {
+  box-sizing: border-box;
   max-width: min(720px, 90%);
   font-size: 14px;
   line-height: 1.5;
@@ -317,6 +318,35 @@
   background: rgb(0 0 0 / 0.06);
   padding: 2px 5px;
   border-radius: 4px;
+}
+
+@media (min-width: 1201px) {
+  .chat__messages {
+    width: 671px;
+    margin-top: 95px;
+    margin-left: 80px;
+    gap: 20px;
+  }
+
+  .chat__input-bar {
+    width: 671px;
+    margin-left: 80px;
+  }
+
+  .chat__message {
+    max-width: none;
+  }
+
+  .chat__message_assistant {
+    width: 555px;
+  }
+
+  .chat__message_user {
+    width: 330px;
+    height: 81px;
+    padding: 12px;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 1200px) {
