@@ -15,6 +15,10 @@ export default function Header({ onMenuOpen, onMenuClose, isMobileMenuOpen }: Pr
 
     if (isActive) {
       classes.push("header__link--active");
+
+      if (!isChat) {
+        classes.push("header__link--knowledge-active");
+      }
     }
 
     if (isActive && isChat) {

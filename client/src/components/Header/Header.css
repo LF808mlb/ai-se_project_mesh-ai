@@ -69,6 +69,15 @@
     position: static;
     margin-left: auto;
   }
+
+  .header__link--knowledge-active {
+    background: #9679d933;
+    border-radius: 4px;
+    min-height: 36px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+  }
 }
 
 @media (max-width: 1200px) {
