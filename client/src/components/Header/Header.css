@@ -15,7 +15,18 @@
 }
 
 .header__menu-btn {
-  display: none;
+  display: inline-block;
+  width: 35.98px;
+  height: 35.98px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.header__menu-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .header__nav {

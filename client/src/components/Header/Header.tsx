@@ -1,5 +1,6 @@
 import "./Header.css";
 import { NavLink } from "react-router-dom";
+import hamburgerIcon from "../../assets/hamburgerbutton.svg";
 import logo from "../../assets/logo.png";
 
 type Props = {
@@ -31,7 +32,9 @@ export default function Header({ onMenuOpen, onMenuClose, isMobileMenuOpen }: Pr
         aria-label="Open menu"
         aria-expanded={isMobileMenuOpen}
         onClick={onMenuOpen}
-      />
+      >
+        <img className="header__menu-icon" src={hamburgerIcon} alt="" aria-hidden="true" />
+      </button>
       <img className="header__logo" src={logo} alt="Mesh AI" />
       <nav
         className={isMobileMenuOpen ? "header__nav header__nav_mobile" : "header__nav"}
