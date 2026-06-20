@@ -356,4 +356,10 @@
   .chat__input-bar {
     margin-left: 0;
   }
+
+  .chat__input-bar {
+    width: 361px;
+    height: 100px;
+    max-width: 361px;
+  }
 }
