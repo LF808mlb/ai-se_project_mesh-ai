@@ -102,12 +102,30 @@
     border-top: 1px solid rgb(28 28 28 / 30%);
     background-color: #fff;
     justify-content: flex-start;
-    padding-left: 12px;
+    padding-left: 0;
     box-sizing: border-box;
+  }
+
+  .header__nav .header__link {
+    padding-left: 12px;
   }
 
   /* Shown when the menu is open */
   .header__nav_mobile {
     display: flex;
+  }
+
+  .header_mobile .header__nav_mobile .header__link--active {
+    background: transparent;
+    color: #9679d9;
+  }
+
+  .header_mobile .header__nav_mobile .header__link--chat-active {
+    background: transparent;
+    color: #000000;
+    width: auto;
+    display: block;
+    height: auto;
+    text-align: left;
   }
 }

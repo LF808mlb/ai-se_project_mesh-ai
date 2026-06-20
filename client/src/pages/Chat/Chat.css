@@ -320,6 +320,11 @@
 }
 
 @media (max-width: 1200px) {
+  .chat__main {
+    margin-left: 0;
+    padding: 0 15.99px;
+  }
+
   .chat__sidebar {
     position: fixed;
     top: 47px;
@@ -351,15 +356,27 @@
     transform: translateX(0);
   }
 
+  .chat__sidebar_open .chat__item_active {
+    background: #9679d933;
+    color: #9679d9;
+  }
+
   /* Remove desktop margin-left offsets */
   .chat__messages,
   .chat__input-bar {
     margin-left: 0;
   }
 
+  .chat__messages {
+    width: 100%;
+  }
+
   .chat__input-bar {
-    width: 361px;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
     height: 100px;
-    max-width: 361px;
+    max-width: none;
+    z-index: 90;
   }
 }
