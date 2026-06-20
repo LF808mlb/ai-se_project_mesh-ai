@@ -337,6 +337,16 @@
     flex-direction: column;
   }
 
+  .chat__new-btn,
+  .chat__list {
+    width: 220px;
+    margin-left: 16px;
+  }
+
+  .chat__new-btn {
+    margin-bottom: 12px;
+  }
+
   .chat__sidebar_open {
     transform: translateX(0);
   }
