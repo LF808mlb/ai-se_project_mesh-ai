@@ -359,9 +359,10 @@
     position: fixed;
     top: 47px;
     left: 0;
-    bottom: 0;
+    bottom: 164px;
     width: 75%;
-    height: 70%;
+    height: auto;
+    min-height: calc(100dvh - 47px - 164px);
     max-width: 255px;
     z-index: 102;
     background: #fff;
