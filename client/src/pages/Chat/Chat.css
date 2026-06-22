@@ -374,12 +374,19 @@
   }
 
   .chat__new-btn,
+  .chat__title-input,
   .chat__list {
     width: 220px;
     margin-left: 16px;
   }
 
+  .chat__title-input {
+    box-sizing: border-box;
+    margin-bottom: 12px;
+  }
+
   .chat__new-btn {
+    margin-top: 16px;
     margin-bottom: 12px;
   }
 
