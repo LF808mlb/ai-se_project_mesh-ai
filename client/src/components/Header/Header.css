@@ -83,9 +83,12 @@
 @media (max-width: 1200px) {
   .header {
     position: static;
+    min-height: 60.67px;
+    height: 60.67px;
     justify-content: flex-start;
     gap: 11.99px;
     border-bottom: 1px solid rgb(0 0 0 / 0.1);
+    box-sizing: border-box;
   }
 
   .header__menu-btn {

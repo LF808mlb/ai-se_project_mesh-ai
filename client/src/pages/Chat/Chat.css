@@ -357,12 +357,12 @@
 
   .chat__sidebar {
     position: fixed;
-    top: 47px;
+    top: 60.67px;
     left: 0;
     bottom: 164px;
     width: 75%;
     height: auto;
-    min-height: calc(100dvh - 47px - 164px);
+    min-height: calc(100dvh - 60.67px - 164px);
     max-width: 255px;
     z-index: 102;
     background: #fff;
