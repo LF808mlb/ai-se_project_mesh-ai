@@ -323,14 +323,14 @@
 @media (min-width: 1201px) {
   .chat__messages {
     width: 671px;
-    margin-top: 95px;
-    margin-left: 80px;
+    margin: 95px auto 0;
     gap: 20px;
   }
 
   .chat__input-bar {
     width: 671px;
-    margin-left: 80px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .chat__message {
