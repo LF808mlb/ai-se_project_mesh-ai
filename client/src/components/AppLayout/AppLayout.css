@@ -6,6 +6,8 @@
 .app-layout__main {
   position: relative;
   min-height: calc(100vh - 72px);
+  width: min(100%, 1440px);
+  margin-inline: auto;
 }
 
 .app-layout__backdrop {
