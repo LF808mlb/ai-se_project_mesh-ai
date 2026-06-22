@@ -82,6 +82,7 @@
 
 @media (max-width: 1200px) {
   .header {
+    position: static;
     justify-content: flex-start;
     gap: 11.99px;
     border-bottom: 1px solid rgb(0 0 0 / 0.1);
