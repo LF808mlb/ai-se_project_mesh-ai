@@ -7,7 +7,12 @@
 
 .knowledge-base h1 {
   margin: 0;
-  text-align: center;
+  width: min(100%, 670px);
+  margin: 0 auto;
+  text-align: left;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
 }
 
 .knowledge-base__content {
@@ -101,6 +106,13 @@
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  .knowledge-base h1 {
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
   }
 
   .knowledge-base__content {

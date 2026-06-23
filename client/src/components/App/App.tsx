@@ -1,9 +1,9 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import AppLayout from "../components/AppLayout/AppLayout";
-import Chat from "../pages/Chat/Chat";
-import Intro from "../pages/Intro/Intro";
-import KnowledgeBase from "../pages/KnowledgeBase/KnowledgeBase";
+import AppLayout from "../AppLayout/AppLayout";
+import Chat from "../../pages/Chat/Chat";
+import Intro from "../../pages/Intro/Intro";
+import KnowledgeBase from "../../pages/KnowledgeBase/KnowledgeBase";
 
 function App() {
   return (

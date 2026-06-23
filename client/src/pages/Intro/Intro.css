@@ -13,6 +13,7 @@
 .intro__title-row {
   display: flex;
   align-items: flex-end;
+  width: 670px;
   gap: 11px;
   margin-bottom: 32px;
 }
@@ -45,11 +46,12 @@
 .intro__footer {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  width: 670px;
 }
 
 .intro__subtitle {
-  text-align: center;
+  text-align: left;
 }
 
 .intro__cards {
@@ -108,6 +110,12 @@
   color: #fff;
   font-size: 16px;
   font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .intro__start-btn:hover {
+    cursor: url('../../assets/Cursor.png'), pointer;
+  }
 }
 
 @media (max-width: 767px) {
