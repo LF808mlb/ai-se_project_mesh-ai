@@ -104,6 +104,7 @@
 @media (max-width: 767px) {
   .knowledge-base {
     width: 100%;
+    padding-top: 92.67px;
     padding-left: 20px;
     padding-right: 20px;
   }

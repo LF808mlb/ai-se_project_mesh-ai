@@ -418,3 +418,9 @@
     z-index: 90;
   }
 }
+
+@media (max-width: 767px) {
+  .chat__main {
+    padding-top: 92.67px;
+  }
+}
