@@ -1,3 +1,5 @@
+import type { CurrentUser } from '../types';
+
 const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 export type KnowledgeDoc = {
@@ -245,5 +247,14 @@ export const sendMessage = async (
       createdAt: new Date().toISOString(),
     },
     error: null,
+  };
+};
+
+export const getCurrentUser = async (): Promise<CurrentUser> => {
+  await delay(300);
+  return {
+    userId: 'u1',
+    email: 'user@example.com',
+    name: 'Mesh AI User',
   };
 };
