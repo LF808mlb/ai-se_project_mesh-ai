@@ -23,6 +23,10 @@ export default function Register() {
 		});
 	}
 
+	function getNavLinkClass({ isActive }: { isActive: boolean }) {
+		return isActive ? "form__nav-link form__nav-link_active" : "form__nav-link";
+	}
+
 	return (
 		<main className="auth-page">
 			<header className="header">
@@ -33,20 +37,10 @@ export default function Register() {
 				<p className="form__subtitle">Access your organization's secure workspace</p>
 
 				<nav className="form__nav" aria-label="Authentication pages">
-					<NavLink
-						to="/login"
-						className={({ isActive }) =>
-							isActive ? "form__nav-link form__nav-link_active" : "form__nav-link"
-						}
-					>
+					<NavLink to="/login" className={getNavLinkClass}>
 						Login
 					</NavLink>
-					<NavLink
-						to="/register"
-						className={({ isActive }) =>
-							isActive ? "form__nav-link form__nav-link_active" : "form__nav-link"
-						}
-					>
+					<NavLink to="/register" className={getNavLinkClass}>
 						Register
 					</NavLink>
 				</nav>
