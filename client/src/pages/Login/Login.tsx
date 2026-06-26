@@ -23,11 +23,14 @@ export default function Login() {
 	}
 
 	return (
-		<main>
+		<main className="auth-page">
 			<header className="header">
 				<img className="header__logo" alt="MeshAI logo" src={logo} />
 			</header>
 			<form className="form" noValidate onSubmit={handleSubmit}>
+				<h1 className="form__title">Sign in</h1>
+				<p className="form__subtitle">Access your organization's secure workspace</p>
+
 				<nav className="form__nav" aria-label="Authentication pages">
 					<NavLink to="/login" className={({ isActive }) => (isActive ? "form__nav-link form__nav-link_active" : "form__nav-link")}>
 						Login
@@ -37,11 +40,9 @@ export default function Login() {
 					</NavLink>
 				</nav>
 
-				<h1 className="form__title">Login</h1>
-
 				<div className="form__input-container">
 					<label className="form__label" htmlFor="login-username">
-						Username
+						Email
 						<input
 							id="login-username"
 							className="form__input"
@@ -76,7 +77,7 @@ export default function Login() {
 				</div>
 
 				<button className="form__submit-btn" type="submit" disabled={!isValid}>
-					Submit
+					Login
 				</button>
 				<p className="form__status" role="status" aria-live="polite">
 					{submitError}
