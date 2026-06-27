@@ -43,6 +43,24 @@
   font-weight: 500;
 }
 
+.header__user-name {
+  color: #1c1c1c;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.header__logout-btn {
+  border: 1px solid #1c1c1c;
+  background: transparent;
+  color: #1c1c1c;
+  border-radius: 4px;
+  min-height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .header__link--active {
   color: #1c1c1c;
 }
@@ -123,6 +141,11 @@
 
   .header__nav .header__link {
     padding-left: 12px;
+  }
+
+  .header__nav .header__user-name,
+  .header__nav .header__logout-btn {
+    margin-left: 12px;
   }
 
   /* Shown when the menu is open */
