@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+import { registerUser } from "../../utils/api";
 
 export default function Register() {
 	const [submitError, setSubmitError] = useState("");
 	const { values, errors, isValid, handleChange } = useFormWithValidation();
+	const navigate = useNavigate();
 
-	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		if (!isValid) {
@@ -15,12 +17,23 @@ export default function Register() {
 			return;
 		}
 
-		setSubmitError("");
-		console.log("Register form values:", {
-			name: values.name ?? "",
-			email: values.email ?? "",
-			password: values.password ?? "",
-		});
+		try {
+			const response = await registerUser(
+				values.name ?? "",
+				values.email ?? "",
+				values.password ?? "",
+			);
+
+			if (!response.success) {
+				setSubmitError(response.error?.message ?? "Registration failed");
+				return;
+			}
+
+			setSubmitError("");
+			navigate("/login");
+		} catch (error) {
+			setSubmitError(error instanceof Error ? error.message : "Registration failed");
+		}
 	}
 
 	function getNavLinkClass({ isActive }: { isActive: boolean }) {

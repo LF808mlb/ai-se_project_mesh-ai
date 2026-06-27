@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+import { useAuth } from "../../contexts/AuthContext";
+import { loginUser } from "../../utils/api";
 
 export default function Login() {
 	const [submitError, setSubmitError] = useState("");
 	const { values, errors, isValid, handleChange } = useFormWithValidation();
+	const { login } = useAuth();
+	const navigate = useNavigate();
 
-	function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		if (!isValid) {
@@ -15,11 +19,20 @@ export default function Login() {
 			return;
 		}
 
-		setSubmitError("");
-		console.log("Login form values:", {
-			username: values.username ?? "",
-			password: values.password ?? "",
-		});
+		try {
+			const res = await loginUser(values.email ?? "", values.password ?? "");
+
+			if (res.data) {
+				setSubmitError("");
+				login(res.data.token, res.data.user);
+				navigate("/knowledge");
+				return;
+			}
+
+			setSubmitError(res.error?.message ?? "Invalid credentials");
+		} catch (error) {
+			setSubmitError(error instanceof Error ? error.message : "Something went wrong");
+		}
 	}
 
 	function getNavLinkClass({ isActive }: { isActive: boolean }) {
@@ -45,21 +58,20 @@ export default function Login() {
 				</nav>
 
 				<div className="form__input-container">
-					<label className="form__label" htmlFor="login-username">
+					<label className="form__label" htmlFor="login-email">
 						Email
 						<input
-							id="login-username"
+							id="login-email"
 							className="form__input"
-							name="username"
-							type="text"
+							name="email"
+							type="email"
 							required
-							minLength={2}
-							autoComplete="username"
-							value={values.username ?? ""}
+							autoComplete="email"
+							value={values.email ?? ""}
 							onChange={handleChange}
 						/>
 					</label>
-					{errors.username && <p className="form__error">{errors.username}</p>}
+					{errors.email && <p className="form__error">{errors.email}</p>}
 				</div>
 
 				<div className="form__input-container">

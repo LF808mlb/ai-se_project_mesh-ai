@@ -1,6 +1,7 @@
 import type { CurrentUser } from '../types';
 
 const delay = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+const BASE_URL = '/api';
 
 export type KnowledgeDoc = {
   _id: string;
@@ -30,6 +31,39 @@ export type ApiResponse<T> = {
   data: T | null;
   error: { message: string } | null;
 };
+
+async function request<T>(
+  path: string,
+  options: RequestInit = {},
+): Promise<ApiResponse<T>> {
+  const token = localStorage.getItem('auth-token') ?? '';
+
+  const res = await fetch(path, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      ...options.headers,
+    },
+  });
+
+  if (res.status === 401) {
+    const body = await res.json().catch(() => null);
+    const message = body?.error?.message || 'Invalid credentials';
+    if (localStorage.getItem('auth-token')) {
+      localStorage.removeItem('auth-token');
+      window.location.href = '/login';
+    }
+    throw new Error(message);
+  }
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    throw new Error(body?.error?.message || 'Request failed');
+  }
+
+  return res.json();
+}
 
 export const getDocuments = async (): Promise<ApiResponse<KnowledgeDoc[]>> => {
   await delay(700);
@@ -250,11 +284,20 @@ export const sendMessage = async (
   };
 };
 
-export const getCurrentUser = async (): Promise<CurrentUser> => {
-  await delay(300);
-  return {
-    userId: 'u1',
-    email: 'user@example.com',
-    name: 'Mesh AI User',
-  };
+export const getCurrentUser = async () => {
+  return request<CurrentUser>(`${BASE_URL}/users/me`);
 };
+
+export function registerUser(name: string, email: string, password: string) {
+  return request<CurrentUser>(`${BASE_URL}/auth/register`, {
+    method: 'POST',
+    body: JSON.stringify({ name, email, password }),
+  });
+}
+
+export function loginUser(email: string, password: string) {
+  return request<{ token: string; user: CurrentUser }>(`${BASE_URL}/auth/login`, {
+    method: 'POST',
+    body: JSON.stringify({ email, password }),
+  });
+}
