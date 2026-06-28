@@ -4,7 +4,7 @@ import Chunk from '../models/chunk.js';
 import Document from '../models/document.js';
 import Message from '../models/message.js';
 import { createEmbedding } from '../utils/embeddings.js';
-import { getClient, LLM_MODEL, buildContext } from '../utils/openai-client.js';
+import { getClient, LLM_MODEL, buildContext, stripThinking } from '../utils/openai-client.js';
 import { rankBySimilarity } from '../utils/vector-search.js';
 
 export const createMessage = async (req: Request, res: Response): Promise<void> => {
@@ -49,7 +49,7 @@ export const createMessage = async (req: Request, res: Response): Promise<void> 
     const ranked = rankBySimilarity(queryEmbedding, chunks, 5);
     const context = buildContext(ranked);
 
-    const completion = await getClient().chat.completions.create({
+    const response = await getClient().chat.completions.create({
       model: LLM_MODEL,
       messages: [
         {
@@ -64,7 +64,7 @@ export const createMessage = async (req: Request, res: Response): Promise<void> 
       ],
     });
 
-    const answer = completion.choices[0]?.message?.content?.trim() || 'No response generated.';
+    const answer = stripThinking(response.choices[0]!.message.content ?? '') || 'No answer returned.';
 
     const [userMessage, assistantMessage] = await Promise.all([
       Message.create({

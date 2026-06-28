@@ -119,7 +119,10 @@ export default function Chat() {
     try {
       const res = await sendMessage(activeChatId, text);
       if (res.data) {
-        setMessages((prev) => [...prev, res.data!]);
+        setMessages((prev) => [
+          ...prev.filter((m) => m._id !== userMessage._id),
+          ...res.data!,
+        ]);
       }
     } catch {
       // 2. Append an error Message to the thread (role: 'assistant', content: 'Something went wrong. Please try again.')
@@ -225,9 +228,27 @@ export default function Chat() {
             <p className="chat__no-messages-title">
               Ask a question below to start the conversation
             </p>
-            <div className="chat__ask-box">
-              <span>Ask any question</span>
-              <img className="chat__ask-arrow" src={chatArrow} alt="Send" />
+            <div className="chat__input-bar">
+              <textarea
+                className="chat__input"
+                placeholder="Ask any question"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                disabled={isSending}
+                rows={1}
+              />
+              <button
+                type="button"
+                className="chat__send"
+                aria-label="Send message"
+                onClick={() => {
+                  void handleSend();
+                }}
+                disabled={isSending || !input.trim()}
+              >
+                <img className="chat__send-arrow" src={chatArrow} alt="Send" />
+              </button>
             </div>
           </div>
         )}
@@ -273,6 +294,11 @@ export default function Chat() {
                   )}
                 </li>
               ))}
+              {isSending && (
+                <li className="chat__message chat__message_assistant chat__message_thinking">
+                  Thinking…
+                </li>
+              )}
             </ul>
 
             <div className="chat__input-bar">

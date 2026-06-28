@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { getClient, LLM_MODEL, buildContext } from '../utils/openai-client.js';
+import { getClient, LLM_MODEL, buildContext, stripThinking } from '../utils/openai-client.js';
 import Chunk from '../models/chunk.js';
 import Document from '../models/document.js';
 import { createEmbedding } from '../utils/embeddings.js';
@@ -45,7 +45,7 @@ export const askQuestion = async (req: Request, res: Response) => {
      const topChunks = rankBySimilarity(questionEmbedding, chunks, 5);
      const context = buildContext(topChunks);
 
-     const completion = await getClient().chat.completions.create({
+     const response = await getClient().chat.completions.create({
        model: LLM_MODEL,
        messages: [
          {
@@ -60,7 +60,7 @@ export const askQuestion = async (req: Request, res: Response) => {
        ],
      });
 
-     const answer = completion.choices[0]?.message?.content?.trim() || 'No response generated.';
+     const answer = stripThinking(response.choices[0]!.message.content ?? '') || 'No answer returned.';
 
      res.status(200).json({
        success: true,
