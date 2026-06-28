@@ -7,7 +7,7 @@
   height: 145px;
   background: #f6f3ff;
   border-radius: 16px;
-  font-family: "Work Sans", Arial, Helvetica, sans-serif;
+  font-family: 'Work Sans', Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 120%;
@@ -37,6 +37,11 @@
 
 .upload-area__label .underline {
   text-decoration: underline;
+}
+
+.upload-area__uploading {
+  color: rgba(28, 28, 28, 0.8);
+  font-weight: 500;
 }
 
 .upload-area__input {

@@ -20,21 +20,6 @@
   margin: 32px auto 0;
 }
 
-.knowledge-base__save-btn {
-  background: #1c1c1c;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 18px;
-  padding: 10px 16px;
-  margin-top: 32px;
-}
-
-.knowledge-base__save-btn:hover {
-  background: linear-gradient(180deg, #1c1c1c 0%, #9679d9 40%, #9679d9 100%);
-}
-
 .file__upload-list {
   display: flex;
   flex-wrap: wrap;
@@ -136,9 +121,5 @@
   .document {
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  .knowledge-base__save-btn {
-    width: 100%;
   }
 }

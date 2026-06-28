@@ -1,17 +1,20 @@
 import "./UploadArea.css";
 
 type Props = {
-  onFileSelect: (file: File) => void;
+  onFileSelect: (file: File) => void | Promise<void>;
+  isUploading: boolean;
 };
 
-export default function UploadArea({ onFileSelect }: Props) {
+export default function UploadArea({ onFileSelect, isUploading }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isUploading) return;
     const file = e.target.files?.[0];
     if (file) onFileSelect(file);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    if (isUploading) return;
     const file = e.dataTransfer.files?.[0];
     if (file) onFileSelect(file);
   };
@@ -21,6 +24,7 @@ export default function UploadArea({ onFileSelect }: Props) {
       className="upload-area"
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
+      aria-busy={isUploading}
     >
       <label className="upload-area__label">
         <svg
@@ -40,13 +44,20 @@ export default function UploadArea({ onFileSelect }: Props) {
             strokeLinejoin="round"
           />
         </svg>
-        <span>Drag and drop a PDF, or </span>
-        <span className="underline">Upload</span>
+        {isUploading ? (
+          <span className="upload-area__uploading">Uploading...</span>
+        ) : (
+          <>
+            <span>Drag and drop a PDF, or </span>
+            <span className="underline">Upload</span>
+          </>
+        )}
         <input
           type="file"
           accept=".pdf"
           className="upload-area__input"
           onChange={handleChange}
+          disabled={isUploading}
         />
       </label>
     </div>
