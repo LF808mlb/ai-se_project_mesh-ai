@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import {
@@ -32,6 +32,7 @@ export default function Chat() {
   const [messagesError, setMessagesError] = useState<string>("");
   const [input, setInput] = useState<string>("");
   const [isSending, setIsSending] = useState<boolean>(false);
+  const messagesEndRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const load = async () => {
@@ -79,6 +80,11 @@ export default function Chat() {
 
     load();
   }, [activeChatId]);
+
+  useEffect(() => {
+    if (!activeChatId) return;
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, activeChatId]);
 
 
   const handleCreateChat = async () => {
@@ -299,6 +305,7 @@ export default function Chat() {
                   Thinking…
                 </li>
               )}
+              <li ref={messagesEndRef} />
             </ul>
 
             <div className="chat__input-bar">

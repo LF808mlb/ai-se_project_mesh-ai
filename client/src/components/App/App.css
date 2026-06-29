@@ -4,3 +4,15 @@
   flex-direction: column;
   min-height: 100vh;
 }
+
+.app::after {
+  content: '';
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 340px;
+  background: linear-gradient(to bottom, transparent 0%, #fff 35%);
+  pointer-events: none;
+  z-index: 1;
+}
