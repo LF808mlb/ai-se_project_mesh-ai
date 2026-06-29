@@ -16,3 +16,9 @@
   pointer-events: none;
   z-index: 1;
 }
+
+@media (max-width: 1200px) {
+  .app.app--chat:not(.app--chat-no-active)::after {
+    content: none;
+  }
+}

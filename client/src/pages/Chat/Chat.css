@@ -222,6 +222,12 @@
   z-index: 100;
 }
 
+.chat__input-bar_active {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
 .chat__input {
   width: 100%;
   min-height: 44px;
@@ -422,6 +428,26 @@
     max-width: none;
     margin: 0;
     z-index: 100;
+  }
+
+  .chat__input-bar_active {
+    left: 15.99px;
+    right: 16.65px;
+    width: auto;
+    height: 100px;
+    border-radius: 8px;
+    padding-top: 10px;
+    box-sizing: border-box;
+  }
+
+  .chat__input-bar_active .chat__input {
+    width: 100%;
+  }
+
+  .chat__input-bar_active .chat__send {
+    position: absolute;
+    top: 10px;
+    right: 12px;
   }
 }
 

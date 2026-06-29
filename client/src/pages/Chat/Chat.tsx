@@ -252,7 +252,7 @@ export default function Chat() {
             <p className="chat__no-messages-title">
               Ask a question below to start the conversation
             </p>
-            <div className="chat__input-bar">
+            <div className="chat__input-bar chat__input-bar_active">
               <textarea
                 className="chat__input"
                 placeholder="Ask any question"
@@ -326,7 +326,7 @@ export default function Chat() {
               <li ref={messagesEndRef} />
             </ul>
 
-            <div className="chat__input-bar">
+            <div className="chat__input-bar chat__input-bar_active">
               <textarea
                 className="chat__input"
                 placeholder="Ask any question"
