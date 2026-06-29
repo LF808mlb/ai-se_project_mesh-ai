@@ -63,7 +63,7 @@ export default function Register() {
 						Name
 						<input
 							id="register-name"
-							className="form__input"
+							className={`form__input${errors.name ? " form__input_error" : ""}`}
 							name="name"
 							type="text"
 							required
@@ -82,7 +82,7 @@ export default function Register() {
 						Email
 						<input
 							id="register-email"
-							className="form__input"
+							className={`form__input${errors.email ? " form__input_error" : ""}`}
 							name="email"
 							type="email"
 							required

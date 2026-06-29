@@ -81,6 +81,10 @@
   border-radius: 8px;
 }
 
+.form__input_error {
+  border: 1px solid #e36161;
+}
+
 .form__input:focus {
   outline: 2px solid #9679d955;
   border-color: #9679d9;
@@ -106,12 +110,12 @@
 .form__error {
   margin-top: 6px;
   font-size: 13px;
-  color: #b32727;
+  color: #e36161;
 }
 
 .form__status {
   min-height: 20px;
   margin-top: 12px;
   font-size: 13px;
-  color: #b32727;
+  color: #e36161;
 }

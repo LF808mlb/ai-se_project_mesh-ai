@@ -86,6 +86,21 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, activeChatId]);
 
+  useEffect(() => {
+    const appRoot = document.querySelector(".app");
+    if (!appRoot) return;
+
+    if (!activeChatId) {
+      appRoot.classList.add("app--chat-no-active");
+    } else {
+      appRoot.classList.remove("app--chat-no-active");
+    }
+
+    return () => {
+      appRoot.classList.remove("app--chat-no-active");
+    };
+  }, [activeChatId]);
+
 
   const handleCreateChat = async () => {
     const title = newChatTitle.trim() || "New Chat";
@@ -124,10 +139,11 @@ export default function Chat() {
 
     try {
       const res = await sendMessage(activeChatId, text);
-      if (Array.isArray(res.data?.messages)) {
+      const returnedMessages = res.data?.messages;
+      if (Array.isArray(returnedMessages)) {
         setMessages((prev) => [
           ...prev.filter((m) => m._id !== userMessage._id),
-          ...res.data.messages,
+          ...returnedMessages,
         ]);
       } else {
         setMessages((prev) => prev.filter((m) => m._id !== userMessage._id));

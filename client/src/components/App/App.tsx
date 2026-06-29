@@ -1,5 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AppLayout from "../AppLayout/AppLayout";
 import Chat from "../../pages/Chat/Chat";
 import Intro from "../../pages/Intro/Intro";
@@ -9,8 +10,11 @@ import Register from "../../pages/Register/Register";
 import { ProtectedRoute, PublicRoute } from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
+  const { pathname } = useLocation();
+  const isChatRoute = pathname.startsWith("/chat");
+
   return (
-    <div className="app">
+    <div className={`app${isChatRoute ? " app--chat" : ""}`}>
       <Routes>
         <Route element={<PublicRoute />}>
           <Route path="/" element={<Intro />} />
