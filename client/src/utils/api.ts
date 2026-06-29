@@ -25,6 +25,15 @@ export type Message = {
   createdAt: string;
 };
 
+export type SendMessageResult = {
+  messages: Message[];
+  sources: Array<{
+    chunkId: string;
+    documentId: string;
+    score: number;
+  }>;
+};
+
 export type ApiResponse<T> = {
   success: boolean;
   data: T | null;
@@ -119,8 +128,8 @@ export const createChat = (title: string): Promise<ApiResponse<Chat>> => {
 export const sendMessage = (
   chatId: string,
   question: string,
-): Promise<ApiResponse<Message[]>> => {
-  return request<Message[]>(`${BASE_URL}/chats/${chatId}/messages`, {
+): Promise<ApiResponse<SendMessageResult>> => {
+  return request<SendMessageResult>(`${BASE_URL}/chats/${chatId}/messages`, {
     method: 'POST',
     body: JSON.stringify({ question }),
   });

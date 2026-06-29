@@ -124,11 +124,13 @@ export default function Chat() {
 
     try {
       const res = await sendMessage(activeChatId, text);
-      if (res.data) {
+      if (Array.isArray(res.data?.messages)) {
         setMessages((prev) => [
           ...prev.filter((m) => m._id !== userMessage._id),
-          ...res.data!,
+          ...res.data.messages,
         ]);
+      } else {
+        setMessages((prev) => prev.filter((m) => m._id !== userMessage._id));
       }
     } catch {
       // 2. Append an error Message to the thread (role: 'assistant', content: 'Something went wrong. Please try again.')
