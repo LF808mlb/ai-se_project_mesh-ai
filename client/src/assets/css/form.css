@@ -121,15 +121,19 @@
 }
 
 @media (max-width: 1200px) {
+  .auth-page {
+    padding-top: 76.67px;
+    box-sizing: border-box;
+  }
+
   .form {
-    width: 393.6470642089844px;
-    min-width: 393.6470642089844px;
-    max-width: 393.6470642089844px;
-    flex: 0 0 auto;
-    height: 650.1217651367188px;
+    width: min(100% - 32px, 420px);
+    min-width: 0;
+    max-width: 420px;
+    flex: 0 1 auto;
+    height: auto;
     padding-top: 48px;
-    margin-left: 15.99px;
-    margin-right: 15.66px;
+    margin: 16px auto 0;
     border: none;
     box-shadow: none;
     box-sizing: border-box;
