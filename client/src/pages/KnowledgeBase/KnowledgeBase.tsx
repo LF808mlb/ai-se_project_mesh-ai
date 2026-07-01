@@ -74,6 +74,10 @@ export default function KnowledgeBase() {
         {!isLoading && !error && documents.length === 0 && (
           <p className="state-message">No documents yet.</p>
         )}
+
+        <button type="button" className="knowledge-base__save-btn">
+          Save
+        </button>
       </section>
     </div>
   );

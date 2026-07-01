@@ -37,6 +37,20 @@
   color: #d32f2f;
 }
 
+.knowledge-base__save-btn {
+  margin-top: 24px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: #1c1c1c;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .file__upload {
   display: inline-flex;
   align-items: center;
@@ -116,6 +130,10 @@
   .file__upload {
     width: fit-content;
     justify-content: flex-start;
+  }
+
+  .knowledge-base__save-btn {
+    width: 100%;
   }
 
   .document {
