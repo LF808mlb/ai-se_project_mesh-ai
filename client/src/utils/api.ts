@@ -40,6 +40,11 @@ export type ApiResponse<T> = {
   error: { message: string } | null;
 };
 
+export type UploadDocumentResult = {
+  document: KnowledgeDoc;
+  chunkCount: number;
+};
+
 async function request<T>(
   path: string,
   options: RequestInit = {},
@@ -77,7 +82,7 @@ export const getDocuments = (): Promise<ApiResponse<KnowledgeDoc[]>> => {
   return request<KnowledgeDoc[]>(`${BASE_URL}/documents`);
 };
 
-export const uploadDocument = async (file: File): Promise<ApiResponse<KnowledgeDoc>> => {
+export const uploadDocument = async (file: File): Promise<ApiResponse<UploadDocumentResult>> => {
   const token = localStorage.getItem('auth-token') ?? '';
   const formData = new FormData();
   formData.append('file', file);

@@ -40,8 +40,12 @@ export default function KnowledgeBase() {
     setError(null);
     try {
       const res = await uploadDocument(file);
-      if (res.data) {
-        setDocuments((prev) => [res.data!, ...prev]);
+      const uploadedDocument = res.data?.document;
+      if (uploadedDocument) {
+        setDocuments((prev) => [uploadedDocument, ...prev]);
+      } else {
+        const docsRes = await getDocuments();
+        setDocuments(docsRes.data ?? []);
       }
     } catch {
       setError("Failed to upload document.");
