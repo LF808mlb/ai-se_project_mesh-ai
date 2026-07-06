@@ -336,6 +336,16 @@
     gap: 20px;
   }
 
+  .chat__no-messages_initial .chat__input-bar {
+    position: relative;
+    width: 100%;
+    max-width: 671px;
+    margin: 32px auto 0;
+    left: auto;
+    right: auto;
+    bottom: auto;
+  }
+
   .chat__input-bar {
     max-width: 671px;
   }
