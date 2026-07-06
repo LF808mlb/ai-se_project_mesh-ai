@@ -1,4 +1,5 @@
 import { readFile, unlink } from 'node:fs/promises';
+import { join } from 'node:path';
 import type { NextFunction, Request, Response } from 'express';
 import Chunk from '../models/chunk.js';
 import Document from '../models/document.js';
@@ -42,16 +43,33 @@ export const ingestDocument = (req: Request, res: Response): void => {
 
 export const deleteDocument = (req: Request, res: Response): void => {
 	const { id } = req.params;
-	// Dummy delete logic for demonstration
-	if (id !== 'doc_1001' && id !== 'doc_1002') {
-		res.status(404).json({
+	void (async () => {
+		const document = await Document.findOne({ _id: id, userId: req.user!.userId });
+
+		if (!document) {
+			res.status(404).json({
+				success: false,
+				data: null,
+				error: { message: 'Document not found' },
+			});
+			return;
+		}
+
+		await Chunk.deleteMany({ documentId: document._id });
+		await Document.deleteOne({ _id: document._id });
+
+		if (document.storageFileName) {
+			await unlink(join('uploads', document.storageFileName)).catch(() => undefined);
+		}
+
+		res.status(204).send();
+	})().catch(() => {
+		res.status(500).json({
 			success: false,
 			data: null,
-			error: 'Document not found'
+			error: { message: 'Failed to delete document' },
 		});
-		return;
-	}
-	res.status(204).send();
+	});
 };
 
 export const updateDocument = (req: Request, res: Response): void => {
@@ -122,6 +140,7 @@ export const uploadDocument = async (req: Request, res: Response, next: NextFunc
 		const document = await Document.create({
 			title,
 			fileName: req.file.originalname,
+			storageFileName: req.file.filename,
 			userId: req.user!.userId,
 		});
 

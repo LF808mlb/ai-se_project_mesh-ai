@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./KnowledgeBase.css";
 import type { KnowledgeDoc } from "../../utils/api";
 import UploadArea from "../../components/UploadArea/UploadArea";
-import { getDocuments, uploadDocument } from "../../utils/api";
+import { deleteDocument, getDocuments, uploadDocument } from "../../utils/api";
 import deleteIcon from "../../assets/Frame.png";
 import deleteIconHover from "../../assets/grayframe.png";
 
@@ -54,6 +54,22 @@ export default function KnowledgeBase() {
     }
   };
 
+  const handleDeleteDocument = async (id: string) => {
+    setError(null);
+
+    try {
+      const res = await deleteDocument(id);
+
+      if (!res.success) {
+        throw new Error();
+      }
+
+      setDocuments((prev) => prev.filter((doc) => doc._id !== id));
+    } catch {
+      setError("Failed to delete document.");
+    }
+  };
+
   return (
     <div className="knowledge-base">
       <h1>Manage Your Knowledge Base</h1>
@@ -65,7 +81,12 @@ export default function KnowledgeBase() {
             {documents.map((doc) => (
               <li key={doc._id} className="file__upload">
                 <span className="document">{doc.fileName}</span>
-                <button type="button" className="delete-btn" aria-label={`Delete ${doc.fileName}`}>
+                <button
+                  type="button"
+                  className="delete-btn"
+                  aria-label={`Delete ${doc.fileName}`}
+                  onClick={() => handleDeleteDocument(doc._id)}
+                >
                   <img src={deleteIcon} alt="" aria-hidden="true" className="delete-icon delete-icon--default" />
                   <img src={deleteIconHover} alt="" aria-hidden="true" className="delete-icon delete-icon--hover" />
                 </button>

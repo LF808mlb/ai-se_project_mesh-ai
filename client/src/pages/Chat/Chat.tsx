@@ -111,8 +111,15 @@ export default function Chat() {
       const res = await createChat(title);
 
       if (res.data) {
-        setChats((prev) => [res.data as ChatType, ...prev]);
-        setActiveChatId(res.data._id);
+        const createdChat: ChatType = {
+          _id: res.data.chatId,
+          title: res.data.title,
+          userId: res.data.userId,
+          createdAt: res.data.createdAt,
+        };
+
+        setChats((prev) => [createdChat, ...prev]);
+        setActiveChatId(createdChat._id);
         setIsMobileMenuOpen(false);
       }
     } catch {

@@ -17,6 +17,13 @@ export type Chat = {
   createdAt: string;
 };
 
+export type CreateChatResult = {
+  chatId: string;
+  title: string;
+  userId: string;
+  createdAt: string;
+};
+
 export type Message = {
   _id: string;
   chatId: string;
@@ -75,6 +82,14 @@ async function request<T>(
     throw new Error(body?.error?.message || 'Request failed');
   }
 
+  if (res.status === 204) {
+    return {
+      success: true,
+      data: null,
+      error: null,
+    };
+  }
+
   return res.json();
 }
 
@@ -113,6 +128,12 @@ export const uploadDocument = async (file: File): Promise<ApiResponse<UploadDocu
   return res.json();
 };
 
+export const deleteDocument = (id: string): Promise<ApiResponse<void>> => {
+  return request<void>(`${BASE_URL}/documents/${id}`, {
+    method: 'DELETE',
+  });
+};
+
 export const getChats = (): Promise<ApiResponse<Chat[]>> => {
   return request<Chat[]>(`${BASE_URL}/chats`);
 };
@@ -123,8 +144,8 @@ export const getChat = (
   return request<{ chat: Chat; messages: Message[] }>(`${BASE_URL}/chats/${id}`);
 };
 
-export const createChat = (title: string): Promise<ApiResponse<Chat>> => {
-  return request<Chat>(`${BASE_URL}/chats`, {
+export const createChat = (title: string): Promise<ApiResponse<CreateChatResult>> => {
+  return request<CreateChatResult>(`${BASE_URL}/chats`, {
     method: 'POST',
     body: JSON.stringify({ title }),
   });

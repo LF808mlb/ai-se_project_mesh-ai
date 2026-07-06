@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 export interface IDocument {
     title: string;
     fileName: string;
+    storageFileName?: string;
     userId: mongoose.Types.ObjectId;
     createdAt: Date;
 }
@@ -15,6 +16,9 @@ const documentSchema = new mongoose.Schema<IDocument>({
     fileName: {
         type: String,
         required: true
+    },
+    storageFileName: {
+        type: String,
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
