@@ -20,11 +20,15 @@ export default function Header({ onMenuOpen, onMenuClose, isMobileMenuOpen }: Pr
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!isMobileMenuOpen) {
-      setIsUserMenuOpen(false);
-    }
-  }, [isMobileMenuOpen]);
+  const handleMenuOpen = () => {
+    setIsUserMenuOpen(false);
+    onMenuOpen();
+  };
+
+  const handleMenuClose = () => {
+    setIsUserMenuOpen(false);
+    onMenuClose();
+  };
 
   useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
@@ -42,9 +46,8 @@ export default function Header({ onMenuOpen, onMenuClose, isMobileMenuOpen }: Pr
   }, [isUserMenuOpen]);
 
   const handleLogout = () => {
-    setIsUserMenuOpen(false);
     logout();
-    onMenuClose();
+    handleMenuClose();
     navigate("/login");
   };
 
@@ -73,7 +76,7 @@ export default function Header({ onMenuOpen, onMenuClose, isMobileMenuOpen }: Pr
         className="header__menu-btn"
         aria-label="Open menu"
         aria-expanded={isMobileMenuOpen}
-        onClick={onMenuOpen}
+        onClick={handleMenuOpen}
       >
         <img className="header__menu-icon" src={hamburgerIcon} alt="" aria-hidden="true" />
       </button>
@@ -84,13 +87,13 @@ export default function Header({ onMenuOpen, onMenuClose, isMobileMenuOpen }: Pr
       >
         {isAuthenticated && (
           <>
-            <NavLink to="/knowledge" className={({ isActive }) => getNavLinkClass({ isActive })} onClick={onMenuClose}>
+            <NavLink to="/knowledge" className={({ isActive }) => getNavLinkClass({ isActive })} onClick={handleMenuClose}>
               Knowledge Base
             </NavLink>
             <NavLink
               to="/chat"
               className={(props) => getNavLinkClass({ ...props, isChat: true })}
-              onClick={onMenuClose}
+              onClick={handleMenuClose}
             >
               Chat
             </NavLink>
