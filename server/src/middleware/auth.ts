@@ -15,7 +15,26 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as unknown as {
+    if (!token) {
+      res.status(401).json({
+        success: false,
+        data: null,
+        error: { message: 'Authorization token required' },
+      });
+      return;
+    }
+
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      res.status(500).json({
+        success: false,
+        data: null,
+        error: { message: 'Server configuration error' },
+      });
+      return;
+    }
+
+    const decoded = jwt.verify(token, jwtSecret) as unknown as {
       userId: string;
     };
 

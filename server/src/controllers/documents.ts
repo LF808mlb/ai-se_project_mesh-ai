@@ -44,7 +44,11 @@ export const ingestDocument = (req: Request, res: Response): void => {
 export const deleteDocument = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	void (async () => {
-		const document = await Document.findOne({ _id: id, userId: req.user!.userId });
+		const document = await Document.findOne()
+			.where('_id')
+			.equals(id)
+			.where('userId')
+			.equals(req.user!.userId);
 
 		if (!document) {
 			res.status(404).json({

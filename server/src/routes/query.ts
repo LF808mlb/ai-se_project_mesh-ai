@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { askQuestion } from '../controllers/query.ts';
-import { auth } from '../middleware/auth.ts';
+import { askQuestion } from '../controllers/query.js';
+import { auth } from '../middleware/auth.js';
 
 
 const queryRouter = Router();
