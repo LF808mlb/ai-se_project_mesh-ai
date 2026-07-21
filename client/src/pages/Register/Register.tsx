@@ -2,11 +2,13 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
+import { useAuth } from "../../contexts/AuthContext";
 import { registerUser } from "../../utils/api";
 
 export default function Register() {
 	const [submitError, setSubmitError] = useState("");
 	const { values, errors, isValid, handleChange } = useFormWithValidation();
+	const { login } = useAuth();
 	const navigate = useNavigate();
 
 	async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -24,13 +26,14 @@ export default function Register() {
 				values.password ?? "",
 			);
 
-			if (!response.success) {
+			if (!response.success || !response.data) {
 				setSubmitError(response.error?.message ?? "Registration failed");
 				return;
 			}
 
 			setSubmitError("");
-			navigate("/login");
+			login(response.data.token, response.data.user);
+			navigate("/knowledge");
 		} catch (error) {
 			setSubmitError(error instanceof Error ? error.message : "Registration failed");
 		}

@@ -166,7 +166,7 @@ export const getCurrentUser = async () => {
 };
 
 export function registerUser(name: string, email: string, password: string) {
-  return request<CurrentUser>(`${BASE_URL}/auth/register`, {
+  return request<{ token: string; user: CurrentUser }>(`${BASE_URL}/auth/register`, {
     method: 'POST',
     body: JSON.stringify({ name, email, password }),
   });
