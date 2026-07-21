@@ -4,8 +4,11 @@ import type { NextFunction, Request, Response } from 'express';
 import Chunk from '../models/chunk.js';
 import Document from '../models/document.js';
 import { chunkText } from '../utils/chunk.js';
+import { deleteCacheValue, getCacheValue, setCacheValue } from '../utils/cache.js';
 import { createEmbedding } from '../utils/embeddings.js';
 import { PDFParse } from '../../node_modules/pdf-parse/dist/pdf-parse/esm/index.js';
+
+const DOCUMENTS_LIST_CACHE_TTL_MS = 30 * 1000;
 
 const isPdfUpload = (file: Express.Multer.File): boolean =>
 	file.mimetype === 'application/pdf' || file.originalname.toLowerCase().endsWith('.pdf');
@@ -44,6 +47,7 @@ export const ingestDocument = (req: Request, res: Response): void => {
 export const deleteDocument = (req: Request, res: Response): void => {
 	const { id } = req.params;
 	void (async () => {
+		const cacheKey = `documents-list:${req.user!.userId}`;
 		const document = await Document.findOne()
 			.where('_id')
 			.equals(id)
@@ -61,6 +65,7 @@ export const deleteDocument = (req: Request, res: Response): void => {
 
 		await Chunk.deleteMany({ documentId: document._id });
 		await Document.deleteOne({ _id: document._id });
+		deleteCacheValue(cacheKey);
 
 		if (document.storageFileName) {
 			await unlink(join('uploads', document.storageFileName)).catch(() => undefined);
@@ -128,6 +133,7 @@ export const uploadDocument = async (req: Request, res: Response, next: NextFunc
 
 	const title = req.body.title || req.file.originalname;
 	const filePath = req.file.path;
+	const cacheKey = `documents-list:${req.user!.userId}`;
 
 	try {
 		const extractedText = await extractPdfText(filePath);
@@ -155,6 +161,8 @@ export const uploadDocument = async (req: Request, res: Response, next: NextFunc
 				return Chunk.create({ documentId: document._id, text, embedding });
 			})
 		);
+
+		deleteCacheValue(cacheKey);
 
 		res.status(201).send({
 			success: true,
@@ -207,13 +215,24 @@ export const getDocumentById = (req: Request, res: Response): void => {
 
 export const listDocuments = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
 	try {
-		const documents = await Document.find().where('userId').equals(req.user!.userId);
+		const cacheKey = `documents-list:${req.user!.userId}`;
+		const cached = getCacheValue<{ success: boolean; data: unknown; error: null }>(cacheKey);
 
-		res.status(200).json({
+		if (cached) {
+			res.status(200).json(cached);
+			return;
+		}
+
+		const documents = await Document.find().where('userId').equals(req.user!.userId);
+		const responseData = {
 			success: true,
 			data: documents,
-			error: null
-		});
+			error: null,
+		};
+
+		setCacheValue(cacheKey, responseData, DOCUMENTS_LIST_CACHE_TTL_MS);
+
+		res.status(200).json(responseData);
 	} catch (err) {
 		next(err);
 	}
