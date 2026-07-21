@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
+import { logger } from '../utils/logger.js';
 
 export const notFoundHandler = (req: Request, res: Response, _next: NextFunction): void => {
   res.status(404).json({
@@ -9,8 +10,11 @@ export const notFoundHandler = (req: Request, res: Response, _next: NextFunction
 };
 
 export const errorHandler = (err: unknown, req: Request, res: Response, _next: NextFunction): void => {
-  
-  console.error(err);
+  if (err instanceof Error) {
+    logger.error(err.message, { stack: err.stack });
+  } else {
+    logger.error('Unhandled non-Error thrown', { error: err });
+  }
 
   
   res.status(500).json({
