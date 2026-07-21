@@ -29,6 +29,7 @@ app.get("/health", (req, res): void => {
 
 
 
+app.set('trust proxy', 1);
 app.use(router);
 app.use(notFoundHandler);
 app.use(errorHandler);
