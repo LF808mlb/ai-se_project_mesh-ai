@@ -5,7 +5,7 @@ import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password, name } = req.body;
+  const { email, password, name } = req.body;
 
   if (!email || !password || !name) {
     res.status(400).json({
@@ -28,9 +28,18 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ email, password: hashedPassword, name });
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET!,
+      { expiresIn: '7d' }
+    );
+
     res.status(201).json({
       success: true,
-      data: { userId: user._id, email: user.email, name: user.name },
+      data: { 
+        token, 
+        user: {userId: user._id, email: user.email, name: user.name },
+      },
       error: null,
     });
   } catch (err: unknown) {
