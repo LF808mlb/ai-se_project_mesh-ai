@@ -3,6 +3,11 @@ services:
     image: mongo:7
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build: ./server
@@ -14,7 +19,8 @@ services:
     volumes:
       - uploads_data:/app/uploads
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
 
   frontend:
     build: ./client
